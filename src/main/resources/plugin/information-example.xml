@@ -1,0 +1,21 @@
+<solchecker-information>
+    <solchecker-class>com.vrprep.solchecker.plugin1.MySolchecker1</solchecker-class>
+    <solchecker-pom-path>META-INF/maven/com.vrprep.solchecker/plugin1/pom.xml</solchecker-pom-path>
+    
+    <variants>
+        <variant>
+            <name>variant_name_1</name>
+            <datasets>
+                <dataset>dataset_name_1.1</dataset>
+                <dataset>dataset_name_1.2</dataset>
+            </datasets>
+        </variant>
+        <variant>
+            <name>variant_name_2</name>
+            <datasets>
+                <dataset>dataset_name_2.1</dataset>
+                <dataset>dataset_name_2.2</dataset>
+            </datasets>
+        </variant>
+    </variants>
+</solchecker-information>

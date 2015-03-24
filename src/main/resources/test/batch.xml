@@ -1,0 +1,10 @@
+<batch>
+    <run>
+        <instance>path_to_instance_file1</instance>
+        <solution>path_to_solution_file1</solution>
+    </run>
+    <run>
+        <instance>path_to_instance_file2</instance>
+        <solution>path_to_solution_file2</solution>
+    </run>
+</batch>
