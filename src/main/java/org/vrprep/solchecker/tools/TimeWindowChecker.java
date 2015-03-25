@@ -3,8 +3,11 @@ package org.vrprep.solchecker.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TimeWindowChecker {
-    
+/**
+ * TimeWindowChecker class provides various functions for verify the respects of 
+ * the time windows.
+ */
+public class TimeWindowChecker {    
     /**
      * Checks if each customer on the route is visited during its time window.
      * @param startTime Start time of the route 

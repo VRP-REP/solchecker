@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.vrprep.solchecker.tools;
 
 import java.io.File;
 
 /**
- *
+ * RunnableInformation class allows to contain the couple files (instance/solution).
  */
 public class RunnableInformation {
     private File solutionFile;

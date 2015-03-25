@@ -20,16 +20,18 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
- *
+ * Tools class allows to contain the various functions for read and extract 
+ * information from files.
  */
 public class Tools {
-
     /**
-     *
-     * @param pluginPath
-     * @param solcheckerInformation
+     * Adds the solchecker informations to the plugin file.
+     * @param pluginPath Path to the plugin file.
+     * @param solcheckerInformation Solchecker information to add.
      */
-    public static void updateInformationFromPluginFile(String pluginPath, SolcheckerInformation solcheckerInformation) {
+    public static void addSolcheckerInformationToPluginFile(
+            String pluginPath, 
+            SolcheckerInformation solcheckerInformation) {
         try {
             // Creation of the root element and the document         
             Element root;
@@ -47,11 +49,11 @@ public class Tools {
                 root = doc.getRootElement();
             }
 
-            // 
+            // Conversion of solchecker in xml 
             Element newSolchecker = solcheckerInformation.toXML();
             root.addContent(newSolchecker);
 
-            // Save modification of plugin file
+            // Save plugin file modifications
             XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
             sortie.output(doc, new FileOutputStream(pluginPath));
 
@@ -63,13 +65,17 @@ public class Tools {
     }
 
     /**
-     *
-     * @param pomPath
-     * @param artifactId
-     * @param groupId
-     * @param version
+     * Adds the dependency to the pom file.
+     * @param pomPath Path to the pom file.
+     * @param artifactId ArtifectId of the dependence to add.
+     * @param groupId GroupId of the dependence to add.
+     * @param version Version of the dependence to add.
      */
-    public static void addDependencyToPom(String pomPath, String artifactId, String groupId, String version) {
+    public static void addDependencyToPomFile(
+            String pomPath, 
+            String artifactId, 
+            String groupId, 
+            String version) {
         try {
             // Open pom file
             SAXBuilder sxb = new SAXBuilder();
@@ -127,13 +133,15 @@ public class Tools {
     }
 
     /**
-     *
-     * @param batchFile
-     * @return
+     * Extracts runnable information from batch file.
+     * @param batchFile Batch File containing runnable information (instance 
+     * and solution file).
+     * @return List of extracted runnable information.
      */
-    public static ArrayList<RunnableInformation> extractInformationFromBatchFile(File batchFile) {
+    public static ArrayList<RunnableInformation> extractRunnableInformationFromBatchFile(
+            File batchFile) {
         try {
-            //
+            // Verify that the batch file exists
             if (batchFile == null) {
                 return null;
             }
@@ -171,11 +179,12 @@ public class Tools {
     }
 
     /**
-     *
-     * @param pluginPath
-     * @return
+     * Extracts solchecker information from plugin file.
+     * @param pluginPath Path to the plugin file.
+     * @return List of extracted solchecker information.
      */
-    public static ArrayList<SolcheckerInformation> extractInformationFromPluginFile(String pluginPath) {
+    public static ArrayList<SolcheckerInformation> extractSolcheckerInformationFromPluginFile(
+            String pluginPath) {
         try {
             // Open plugin file
             SAXBuilder sxb = new SAXBuilder();
@@ -209,11 +218,12 @@ public class Tools {
     }
 
     /**
-     *
-     * @param folderPath
-     * @return
+     * Extracts the name of the jar archives in the folder.
+     * @param folderPath Path to the folder to explore.
+     * @return List of extracted archive name.
      */
-    public static ArrayList<String> extractJARFromFolder(String folderPath) {
+    public static ArrayList<String> extractJARFromFolder(
+            String folderPath) {
         ArrayList<String> jarFiles = new ArrayList<String>();
 
         String[] folder = new java.io.File(folderPath).list();
@@ -227,11 +237,14 @@ public class Tools {
     }
 
     /**
-     *
-     * @param jarPath
-     * @return
+     * Extracts solchecker jar path, artifactId, groupId and version from the 
+     * jar archive.
+     * @param jarPath Path to the jar archive.
+     * @return List containing jar path, artifactId, groupId and version of the 
+     * solchecker.
      */
-    public static Vector<String> extractSolcheckerInformationForTable(String jarPath) {
+    public static Vector<String> extractInformationFromJAR(
+            String jarPath) {
         try {
             SAXBuilder sxb = new SAXBuilder();
             JarFile jarFile = new JarFile(jarPath);
@@ -273,17 +286,19 @@ public class Tools {
     }
 
     /**
-     *
-     * @param jarPath
-     * @return
+     * Extracts solchecker information from the jar archive.
+     * @param jarPath Path to the jar archive.
+     * @return Instance of {@link SolcheckerInformation} containing all the 
+     * information read on the jar archive.
      */
-    public static SolcheckerInformation extractSolcheckerInformation(String jarPath) {
+    public static SolcheckerInformation extractSolcheckerInformationFromJAR(
+            String jarPath) {
         try {
-            //
+            // Recovery archive
             SAXBuilder sxb = new SAXBuilder();
             JarFile jarFile = new JarFile(jarPath);
 
-            // Récupération du fichier de configuration de l'archive
+            // Recovery configuration file in archive
             if (jarFile.getEntry("configuration.xml") == null) {
                 return null;
             }
@@ -293,14 +308,14 @@ public class Tools {
 
             SolcheckerInformation solcheckerInformation = new SolcheckerInformation(jarPath, solcheckerElement);
 
-            // Récupération du fichier pom.xml
+            // Recovery pom.xml file
             String pomPath = solcheckerElement.getChildText("solchecker-pom-path");
             InputStream pomFile = jarFile.getInputStream(jarFile.getEntry(pomPath));
             Document docPom = sxb.build(pomFile);
             Element rootPom = docPom.getRootElement();
             Namespace namespace = rootPom.getNamespace();
 
-            // Récupération des informations du plugin (artifactId, groupId & version)
+            // Recovery plugin information (artifactId, groupId & version)
             solcheckerInformation.setArtifactID(rootPom.getChildText("artifactId", namespace));
             solcheckerInformation.setGroupID(rootPom.getChildText("groupId", namespace));
             solcheckerInformation.setVersion(rootPom.getChildText("version", namespace));
@@ -316,9 +331,9 @@ public class Tools {
     }
 
     /**
-     *
-     * @param commande
-     * @return
+     * Executes the commande in parameter.
+     * @param commande Commande to execute.
+     * @return TRUE if the command was executed, FALSE otherwise.
      */
     public static boolean executeCommande(String[] commande) {
         try {
@@ -350,21 +365,4 @@ public class Tools {
             return false;
         }
     }
-
-    /**
-     *
-     * @param p
-     * @return
-     */
-    /*private static BufferedReader getOutput(Process p) {
-     return new BufferedReader(new InputStreamReader(p.getInputStream()));
-     }*/
-    /**
-     *
-     * @param p
-     * @return
-     */
-    /*private static BufferedReader getError(Process p) {
-     return new BufferedReader(new InputStreamReader(p.getErrorStream()));
-     }*/
 }

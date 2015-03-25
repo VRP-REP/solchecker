@@ -3,6 +3,9 @@ package org.vrprep.solchecker.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * CapacityChecker class provides various functions for verify the vehicule capacity.
+ */
 public class CapacityChecker {    
     /**
      * Checks whether the total customer demand for the route doesn't exceed 

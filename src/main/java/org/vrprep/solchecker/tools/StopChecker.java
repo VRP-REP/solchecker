@@ -3,8 +3,11 @@ package org.vrprep.solchecker.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * StopChecker class provides various functions for verify the number of visits
+ * for each customer.
+ */
 public class StopChecker {
-    
     /**
      * Checks if all clients contained in stopID were visited a number of times 
      * between min and max.

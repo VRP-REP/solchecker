@@ -3,6 +3,10 @@ package org.vrprep.solchecker.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * PickupDeliveryChecker class provides various functions for verify the pickup 
+ * and delivery constraint.
+ */
 public class PickupDeliveryChecker {    
     /**
      * Checks if all the pickup are before the delivery on the route.

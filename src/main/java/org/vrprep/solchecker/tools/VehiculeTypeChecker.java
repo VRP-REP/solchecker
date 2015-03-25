@@ -3,8 +3,11 @@ package org.vrprep.solchecker.tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class VehiculeTypeChecker {
-    
+/**
+ * VehiculeTypeChecker class provides various functions for verify the type of 
+ * vehicule on the route.
+ */
+public class VehiculeTypeChecker {    
     /**
      * Checks if all the customer visited during the route are visited by the 
      * right vehicule type.

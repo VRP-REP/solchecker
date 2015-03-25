@@ -2,11 +2,12 @@ package org.vrprep.solchecker.tools;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Vector;
 import org.jdom.Element;
 
 /**
- *
+ * SolcheckerInformation class allows to contain the various specific information of
+ * the solchecker (jar path, solchecker class name, artifactid, groupid, version,
+ * list and configuration of variants and datasets).
  */
 public class SolcheckerInformation {
 
@@ -33,6 +34,15 @@ public class SolcheckerInformation {
         this.variantConfiguration = new HashMap<String, SolcheckerConfiguration>();
     }
 
+    /**
+     * Permits to initialize the SolcheckerInformation object with path, 
+     * solchecker class, artifactId, groupId and version passed as parameter.
+     * @param path Path to the solchecker archive.
+     * @param solcheckerClass Name of the class implementing {@link SolChecker}.
+     * @param artifactID ArtifactId of the solchecker.
+     * @param groupID GroupId of the solchecker.
+     * @param version Version of the solchecker.
+     */
     public SolcheckerInformation(String path, String solcheckerClass, String artifactID, String groupID, String version) {
         this.jarPath = path;
         this.solcheckerClassName = solcheckerClass;
@@ -45,6 +55,13 @@ public class SolcheckerInformation {
         this.variantConfiguration = new HashMap<String, SolcheckerConfiguration>();
     }
 
+    /**
+     * Permits to initialize the SolcheckerInformation object from a 
+     * solchecker Element and the solchecker path.
+     * @param path Path to solchecker archive.
+     * @param solcheckerElement JDom Element containing artifactId, groupId, 
+     * version, variants, datasets and configuration.
+     */
     public SolcheckerInformation(String path, Element solcheckerElement) {
         this.jarPath = path;
         this.solcheckerClassName = solcheckerElement.getChild("solchecker-class-name").getText();
@@ -58,23 +75,25 @@ public class SolcheckerInformation {
         this.variantConfiguration = new HashMap<String, SolcheckerConfiguration>();
 
         // 
-        for (Object variant : solcheckerElement.getChild("variants").getChildren("variant")) {
-            Element variantElement = (Element) variant;
-            
-            String variantName = variantElement.getAttributeValue("name");
-            this.addVariant(variantName);
+        if(solcheckerElement.getChild("variants") != null){
+            for (Object variant : solcheckerElement.getChild("variants").getChildren("variant")) {
+                Element variantElement = (Element) variant;
 
-            // Récupération des datasets de la variante
-            for (Object dataset : variantElement.getChild("datasets").getChildren("dataset")) {
-                Element datasetElement = (Element) dataset;
-                this.addDataset(variantName, datasetElement.getText());
+                String variantName = variantElement.getAttributeValue("name");
+                this.addVariant(variantName);
+
+                // Récupération des datasets de la variante
+                for (Object dataset : variantElement.getChild("datasets").getChildren("dataset")) {
+                    Element datasetElement = (Element) dataset;
+                    this.addDataset(variantName, datasetElement.getText());
+                }
+
+                // Récupération de la configuration de la variante
+                Element configurationElement = variantElement.getChild("configuration");
+                SolcheckerConfiguration solcheckerConfiguration = new SolcheckerConfiguration(configurationElement);
+
+                this.addConfiguration(variantName, solcheckerConfiguration);
             }
-
-            // Récupération de la configuration de la variante
-            Element configurationElement = variantElement.getChild("configuration");
-            SolcheckerConfiguration solcheckerConfiguration = new SolcheckerConfiguration(configurationElement);
-
-            this.addConfiguration(variantName, solcheckerConfiguration);
         }
     }
 
@@ -163,10 +182,10 @@ public class SolcheckerInformation {
     }
 
     /**
-     *
-     * @param variantName
-     * @param datasetName
-     * @return
+     * Verifies whether the variant dataset combinaison exists in the solchecker.
+     * @param variantName Name of the desired variant.
+     * @param datasetName Name of the desired dataset.
+     * @return TRUE if the variant dataset combinaison exists, FALSE otherwise.
      */
     public boolean hasVariantDatasetCombinaison(String variantName, String datasetName) {        
         if (variants.contains(variantName)) {
@@ -179,18 +198,24 @@ public class SolcheckerInformation {
         return false;
     }
 
-    public boolean compareTo(Vector<String> solcheckerInformation) {
-        if (solcheckerInformation.size() == 4) {
-            if ((solcheckerInformation.get(1).compareTo(artifactID) == 0)
-                    && (solcheckerInformation.get(2).compareTo(groupID) == 0)
-                    && (solcheckerInformation.get(3).compareTo(version) == 0)) {
-                return true;
-            }
-        }
-
-        return false;
+    /**
+     * Compares two solcheckers. The comparison is based on artifactId, groupId 
+     * and version.
+     * @param artifactId ArtifactId to compare.
+     * @param groupId GroupId to compare.
+     * @param version Version to compare.
+     * @return TRUE if the two solcheckers are identical, FALSE otherwise.
+     */
+    public boolean compareTo(String artifactId, String groupId, String version) {
+        return (artifactId.compareTo(this.artifactID) == 0)
+                && (groupId.compareTo(this.groupID) == 0)
+                && (version.compareTo(this.version) == 0);
     }
 
+    /**
+     * Permits to return a JDom Element relating to class' content.
+     * @return JDom Element containing all the solchecker information.
+     */
     public Element toXML() {
         Element solchecker = new Element("solchecker");
 

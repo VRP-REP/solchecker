@@ -2,8 +2,11 @@ package org.vrprep.solchecker.tools;
 
 import java.util.ArrayList;
 
-public class StartEndDepotChecker {
-    
+/**
+ * StartEndDepotChecker class provides various functions for verify that the route 
+ * starts and finishes with depot.
+ */
+public class StartEndDepotChecker {    
     /**
      * Checks if all routes start and end at the depot.
      * @param routes List of routes. Each route contains all the customers' identifiers visited during the route

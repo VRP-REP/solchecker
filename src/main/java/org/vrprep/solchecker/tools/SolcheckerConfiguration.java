@@ -4,7 +4,8 @@ import java.util.HashSet;
 import org.jdom.Element;
 
 /**
- *
+ * SolcheckerConfiguration class allows to contain the configuration of the 
+ * solchecker. Either all the objectives, constraints and metrics that will verify.
  */
 public class SolcheckerConfiguration {
 
@@ -18,25 +19,37 @@ public class SolcheckerConfiguration {
         metrics = new HashSet<String>();
     }
   
+    /**
+     * Permits to initialize the SolcheckerConfiguration object from a 
+     * configuration Element.
+     * @param configurationElement JDom Element containing objectives, 
+     * constraints and metrics.
+     */
     public SolcheckerConfiguration(Element configurationElement) {
         objectives = new HashSet<String>();
         constraints = new HashSet<String>();
         metrics = new HashSet<String>();
 
         if (configurationElement != null) {
-            for (Object objective : configurationElement.getChild("objectives").getChildren("objective")) {
-                Element objectiveElement = (Element) objective;
-                this.addObjective(objectiveElement.getText());
+            if (configurationElement.getChild("objectives") != null) {
+                for (Object objective : configurationElement.getChild("objectives").getChildren("objective")) {
+                    Element objectiveElement = (Element) objective;
+                    this.addObjective(objectiveElement.getText());
+                }
             }
 
-            for (Object constraint : configurationElement.getChild("constraints").getChildren("constraint")) {
-                Element constraintElement = (Element) constraint;
-                this.addConstraint(constraintElement.getText());
+            if (configurationElement.getChild("constraints") != null) {
+                for (Object constraint : configurationElement.getChild("constraints").getChildren("constraint")) {
+                    Element constraintElement = (Element) constraint;
+                    this.addConstraint(constraintElement.getText());
+                }
             }
 
-            for (Object metric : configurationElement.getChild("metrics").getChildren("metric")) {
-                Element metricElement = (Element) metric;
-                this.addMetric(metricElement.getText());
+            if (configurationElement.getChild("metrics") != null) {
+                for (Object metric : configurationElement.getChild("metrics").getChildren("metric")) {
+                    Element metricElement = (Element) metric;
+                    this.addMetric(metricElement.getText());
+                }
             }
         }
     }
@@ -77,6 +90,10 @@ public class SolcheckerConfiguration {
         this.metrics = metrics;
     }
 
+    /**
+     * Permits to return a JDom Element relating to class' content.
+     * @return JDom Element containing all the solchecker configuration.
+     */
     public Element toXML() {
         Element configurationElement = new Element("configuration");
 
