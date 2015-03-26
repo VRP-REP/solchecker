@@ -7,20 +7,15 @@ import org.jdom.*;
 /**
  * Defines the interface for evaluations. An evaluation is the result of the
  * evaluation of a constraint, an objective, or any other metric.
- *
- * @author Jorge E. Mendoza (dev@jorge-mendoza.com)
- * @version %I%, %G%
- * @since Feb 5, 2015
  */
 public abstract class Evaluation {
-
     /**
-     * stores the messages send by the constraint evaluator
+     * Stores the messages send by the constraint evaluator
      */
     private List<String> messages;
 
     /**
-     * the name of the evaluated element
+     * The name of the evaluated element
      */
     private String name;
 
@@ -33,6 +28,10 @@ public abstract class Evaluation {
         return messages;
     }
 
+    /**
+     * Adds a new message to the evaluation
+     * @param message Message to add.
+     */
     public void logMessage(String message) {
         if (this.messages == null) {
             this.messages = new ArrayList<String>();
@@ -46,8 +45,7 @@ public abstract class Evaluation {
 
     /**
      * Returns the xml element relating to the evaluation.
-     *
-     * @return xml element
+     * @return Element containing all the information of the evaluation.
      */
     public final Element getXML() {
         Element result = this.toXML();
@@ -62,8 +60,7 @@ public abstract class Evaluation {
 
     /**
      * Builds an xml version of the evaluation.
-     *
-     * @return xml element
+     * @return Element containing all the information of the evaluation.
      */
     protected abstract Element toXML();
 }

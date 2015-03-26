@@ -20,12 +20,7 @@ public class MetricEvaluation extends Evaluation {
     public void setValue(double value) {
         this.value = value;
     }
-
-    /**
-     * Builds an xml version of the metric evaluation.
-     *
-     * @return xml element
-     */
+    
     @Override
     protected Element toXML() {
         Element e = new Element("metric_evaluation");

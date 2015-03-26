@@ -4,7 +4,6 @@ package org.vrprep.solchecker.framework;
  * Defines the interface for constraints.
  */
 public interface Constraint {
-
     /**
      * Allows to evaluate the feasability of a constraint.
      * @param s Solution to evaluate.

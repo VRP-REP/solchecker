@@ -8,12 +8,10 @@ import java.io.File;
  * image as an solution of {@link Solution}.
  */
 public interface SolutionBuilder {
-
     /**
-     * Build a solution from a file.
-     *
-     * @param f an solution file
-     * @return the solution relating to the instance file
+     * Build a solution from a solution file.
+     * @param f Solution file.
+     * @return {@link Solution} relating to the instance file.
      */
     public Solution buildSolution(File f);
 

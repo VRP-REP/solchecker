@@ -14,7 +14,6 @@ import org.jdom.output.XMLOutputter;
  * Defines the report object. A report is the list of evaluation result.
  */
 public final class Report {
-
     /**
      * List of evaluations to be made to build report.
      */
@@ -29,8 +28,8 @@ public final class Report {
     }
     
     /**
-     * Exports the content of evaluations in xml file.
-     * @param f the output file
+     * Exports the content of evaluations to xml file.
+     * @param f Output file.
      */
     public void exportToXML(File f){
         try {
