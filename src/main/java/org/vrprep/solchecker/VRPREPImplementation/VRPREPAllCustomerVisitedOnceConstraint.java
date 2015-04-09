@@ -1,5 +1,6 @@
 package org.vrprep.solchecker.VRPREPImplementation;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Element;
 import org.vrprep.solchecker.framework.ConstraintEvaluation;
@@ -35,6 +36,7 @@ public class VRPREPAllCustomerVisitedOnceConstraint extends VRPREPConstraint {
         }
         
         // Default depot identifier (idDepot = 0)
+        depots = new ArrayList<Integer>();
         depots.add(0);
     }
 
