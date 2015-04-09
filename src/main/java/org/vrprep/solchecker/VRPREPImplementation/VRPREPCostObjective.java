@@ -1,7 +1,8 @@
 package org.vrprep.solchecker.VRPREPImplementation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.jdom.Element;
 import org.vrprep.solchecker.framework.Instance;
 import org.vrprep.solchecker.framework.ObjectiveEvaluation;
@@ -9,12 +10,12 @@ import org.vrprep.solchecker.framework.Solution;
 import org.vrprep.solchecker.tools.DistanceCalculator;
 
 /**
- * Implementation of the constraint "all customer visited only once time"
+ * Implementation of the objective "calculate the total cost of the solution"
  */
 public class VRPREPCostObjective extends VRPREPObjective {
 
-    private ArrayList<ArrayList<Integer>> routesList;
-    private HashMap<Integer, Double[]> customersCordinatesList;
+    private List<List<Integer>> routesList;
+    private Map<Integer, Double[]> customersCordinatesList;
 
     @Override
     public void setup(Solution s, Instance i) {
@@ -29,16 +30,22 @@ public class VRPREPCostObjective extends VRPREPObjective {
         for(Object node : instance.getNodes()){
             Element nodeElement = (Element) node;
             
-            int nodeId = Integer.parseInt(nodeElement.getAttribute("id").getValue());
+            if(nodeElement.getAttribute("id") != null 
+                    && nodeElement.getChildren().size() > 0
+                    && nodeElement.getChild("cx") != null
+                    && nodeElement.getChild("cy") != null){
+                
+                int nodeId = Integer.parseInt(nodeElement.getAttribute("id").getValue());
             
-            int nbCordiantes = nodeElement.getChildren().size();
-            Double [] nodeCordiantes = new Double[nbCordiantes];
-            nodeCordiantes[0] = Double.parseDouble(nodeElement.getChildText("cx"));
-            nodeCordiantes[1] = Double.parseDouble(nodeElement.getChildText("cy"));
-            if(nbCordiantes > 2)
-                nodeCordiantes[2] = Double.parseDouble(nodeElement.getChildText("cz"));
-            
-            customersCordinatesList.put(nodeId, nodeCordiantes);
+                int nbCordiantes = nodeElement.getChildren().size();
+                Double [] nodeCordiantes = new Double[nbCordiantes];
+                nodeCordiantes[0] = Double.parseDouble(nodeElement.getChildText("cx"));
+                nodeCordiantes[1] = Double.parseDouble(nodeElement.getChildText("cy"));
+                if(nbCordiantes > 2)
+                    nodeCordiantes[2] = Double.parseDouble(nodeElement.getChildText("cz"));
+
+                customersCordinatesList.put(nodeId, nodeCordiantes);
+            }
         }
     }
 
@@ -47,8 +54,8 @@ public class VRPREPCostObjective extends VRPREPObjective {
         ObjectiveEvaluation objectiveEvaluation = new ObjectiveEvaluation("cost_function");
         
         double cost = 0;
-        for(ArrayList<Integer> route : routesList){
-            cost += DistanceCalculator.euclideanDistance(route, customersCordinatesList);
+        for(List<Integer> route : routesList){
+            cost += DistanceCalculator.euclideanDistanceOnRoute(route, customersCordinatesList);
         }
         
         objectiveEvaluation.setValue(cost);

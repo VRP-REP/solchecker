@@ -1,6 +1,6 @@
 package org.vrprep.solchecker.VRPREPImplementation;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.jdom.Element;
 import org.vrprep.solchecker.framework.ConstraintEvaluation;
 import org.vrprep.solchecker.framework.Instance;
@@ -12,8 +12,9 @@ import org.vrprep.solchecker.tools.StopChecker;
  */
 public class VRPREPAllCustomerVisitedOnceConstraint extends VRPREPConstraint {
 
-    private ArrayList<ArrayList<Integer>> routesList;
-    private int[] customersList;
+    protected List<List<Integer>> routesList;
+    protected int[] customersList;
+    protected List<Integer> depots;
 
     @Override
     public void setup(Solution s, Instance i) {
@@ -32,12 +33,15 @@ public class VRPREPAllCustomerVisitedOnceConstraint extends VRPREPConstraint {
             customersList[cpt] = Integer.parseInt(nodeElement.getAttribute("id").getValue());
             ++cpt;
         }
+        
+        // Default depot identifier (idDepot = 0)
+        depots.add(0);
     }
 
     @Override
     public ConstraintEvaluation checkConstraint() {
         ConstraintEvaluation constraintEvaluation = new ConstraintEvaluation("all_customers_visited");
-        constraintEvaluation.setFeasible(StopChecker.checkStops(1, 1, customersList, routesList));
+        constraintEvaluation.setFeasible(StopChecker.checkStops(1, 1, customersList, routesList, depots));
 
         return constraintEvaluation;
     }

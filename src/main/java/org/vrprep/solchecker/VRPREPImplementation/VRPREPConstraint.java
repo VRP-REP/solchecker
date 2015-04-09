@@ -6,7 +6,7 @@ import org.vrprep.solchecker.framework.Instance;
 import org.vrprep.solchecker.framework.Solution;
 
 /**
- * Implementation of Constraint for VRP-REP SolChecker
+ * Implementation of Constraint for VRP-REP SolChecker.
  */
 public abstract class VRPREPConstraint implements Constraint{
 

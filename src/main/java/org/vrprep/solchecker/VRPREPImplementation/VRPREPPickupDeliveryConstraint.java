@@ -1,18 +1,18 @@
 package org.vrprep.solchecker.VRPREPImplementation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.vrprep.solchecker.framework.ConstraintEvaluation;
 import org.vrprep.solchecker.framework.Instance;
 import org.vrprep.solchecker.framework.Solution;
 import org.vrprep.solchecker.tools.PickupDeliveryChecker;
 
 /**
- * 
+ * Implementation of the constraint "all pickup are before delivery"
  */
 public class VRPREPPickupDeliveryConstraint extends VRPREPConstraint{
-    private ArrayList<ArrayList<Integer>> routes;
-    private HashMap<Integer, ArrayList<Integer>> pickupDeliveryList;
+    private List<List<Integer>> routes;
+    private Map<Integer, List<Integer>> pickupDeliveryList;
 
     @Override
     public void setup(Solution s, Instance i) {
@@ -23,14 +23,13 @@ public class VRPREPPickupDeliveryConstraint extends VRPREPConstraint{
         routes = solution.getRoutesList();
         
         // PickUp Delivery
-        
     }
 
     @Override
     public ConstraintEvaluation checkConstraint() {
         ConstraintEvaluation constraintEvaluation = new ConstraintEvaluation("pickup_delivery_constraint");
         
-        for(ArrayList<Integer> route : routes){
+        for(List<Integer> route : routes){
             boolean feasability = PickupDeliveryChecker.checkPickupDelivery(route, pickupDeliveryList);
             
             if(!feasability){

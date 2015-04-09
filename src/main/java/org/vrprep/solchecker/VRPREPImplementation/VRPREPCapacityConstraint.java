@@ -1,7 +1,8 @@
 package org.vrprep.solchecker.VRPREPImplementation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.jdom.Element;
 import org.vrprep.solchecker.framework.ConstraintEvaluation;
 import org.vrprep.solchecker.framework.Instance;
@@ -9,12 +10,13 @@ import org.vrprep.solchecker.framework.Solution;
 import org.vrprep.solchecker.tools.CapacityChecker;
 
 /**
- * 
+ * Implementation of the constraint "the total customer requests shall not 
+ * exceed the total capacity of the vehicle"
  */
 public class VRPREPCapacityConstraint extends VRPREPConstraint{
-    private ArrayList<ArrayList<Integer>> routes;
-    private HashMap<Integer, Double> demands;
-    private double capacity;
+    protected List<List<Integer>> routes;
+    protected Map<Integer, Double> demands;
+    protected double capacity;
 
     @Override
     public void setup(Solution s, Instance i) {
@@ -43,7 +45,7 @@ public class VRPREPCapacityConstraint extends VRPREPConstraint{
     public ConstraintEvaluation checkConstraint() {
         ConstraintEvaluation constraintEvaluation = new ConstraintEvaluation("capacity_constraint");
         
-        for(ArrayList<Integer> route : routes){
+        for(List<Integer> route : routes){
             boolean feasability = CapacityChecker.checkCapacity(route, demands, capacity);
             
             if(!feasability){

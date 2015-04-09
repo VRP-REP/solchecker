@@ -99,6 +99,7 @@ public class VRPREPSolChecker extends SolChecker {
             List objectivesList = root.getChild("objectives").getChildren();
             List metricsList = root.getChild("metrics").getChildren();
 
+            // Read constraints
             for (Object constraintObject : constraintsList) {
                 Element constraintElement = (Element) constraintObject;
                 if (constraintElement.getText() != null) {
@@ -108,6 +109,7 @@ public class VRPREPSolChecker extends SolChecker {
                 }
             }
 
+            // Read objectives
             for (Object objectiveObject : objectivesList) {
                 Element objectiveElement = (Element) objectiveObject;
                 if (objectiveElement.getText() != null) {
@@ -117,6 +119,7 @@ public class VRPREPSolChecker extends SolChecker {
                 }
             }
 
+            // Read metrics
             for (Object metricObject : metricsList) {
                 Element metricElement = (Element) metricObject;
                 if (metricElement.getText() != null) {

@@ -8,7 +8,8 @@ import org.vrprep.solchecker.framework.Instance;
 import org.vrprep.solchecker.framework.InstanceBuilder;
 
 /**
- *
+ * Implementation of VRPREPInstanceBuilder to build an instance of 
+ * {@link VRPREPInstance}.
  */
 public class VRPREPInstanceBuilder implements InstanceBuilder {
 

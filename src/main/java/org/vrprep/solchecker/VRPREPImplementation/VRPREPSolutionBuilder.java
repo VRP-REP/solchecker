@@ -3,17 +3,24 @@ package org.vrprep.solchecker.VRPREPImplementation;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.vrprep.solchecker.framework.Solution;
 import org.vrprep.solchecker.framework.SolutionBuilder;
 
 /**
- *
+ * Implementation of SolutionBuilder for VRP-REP SolChecker to build an instance 
+ * of {@link VRPREPSolution}.
  */
 public class VRPREPSolutionBuilder implements SolutionBuilder {
 
+    /**
+     * Build a solution from a file. The file must be formatted like 
+     * "http://www.coin-or.org/SYMPHONY/branchandcut/VRP/data/" solution.
+     * @param f File containing all routes.
+     * @return If the file is correct, then Instance of {@link Solution} 
+     * containing all the routes read on the file, otherwise, null.
+     */
     public Solution buildSolution(File f) {
         try {
             VRPREPSolution solution = new VRPREPSolution();
@@ -25,24 +32,21 @@ public class VRPREPSolutionBuilder implements SolutionBuilder {
                 if (solutionLine.startsWith("Route")) {
                     ArrayList<Integer> customersList = new ArrayList<Integer>();
                     String[] route = solutionLine.split(" ");
-                    Integer routeNum = Integer.parseInt(route[1].substring(1, 2));
+                    Integer idRoute = Integer.parseInt(route[1].split("#:")[0]);
 
                     for (int k = 2; k < route.length; ++k) {
                         customersList.add(Integer.parseInt(route[k]));
                     }
 
-                    solution.addRoute(routeNum, customersList);
+                    solution.addRoute(idRoute, customersList);
                 }
             }
 
             return solution;
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e);
             return null;
-        } catch (NumberFormatException e) {
-            System.out.println(e);
-            return null;
-        }
+        } 
     }
 
 }

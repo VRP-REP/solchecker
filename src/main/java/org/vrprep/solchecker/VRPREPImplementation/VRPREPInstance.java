@@ -5,7 +5,8 @@ import org.jdom.Element;
 import org.vrprep.solchecker.framework.Instance;
 
 /**
- *
+ * Implementation of VRPREPInstance. VRPREPInstance used to model a basic 
+ * instance following the VRPREP schema (xsd).
  */
 public class VRPREPInstance implements Instance{
     
@@ -28,7 +29,12 @@ public class VRPREPInstance implements Instance{
     }
     
     public List getNodes(){
-        return this.getNetwork().getChild("nodes").getChildren();
+        if(this.getNetwork() != null){
+            if(this.getNetwork().getChild("nodes") != null){
+                return this.getNetwork().getChild("nodes").getChildren();
+            }
+        }
+        return null;
     }
     
     public Element getRequests(){
