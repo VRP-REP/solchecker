@@ -1,7 +1,7 @@
 package org.vrprep.solchecker.tools;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * DistanceCalculator class provides various functions for calculating distance.
@@ -33,7 +33,7 @@ public class DistanceCalculator {
      * @param cordinates Map containing for each customer its cordinates
      * @return Euclidean distance traveled by the route
      */
-    public static double euclideanDistance(ArrayList<Integer> route, HashMap<Integer, Double[]> cordinates){
+    public static double euclideanDistanceOnRoute(List<Integer> route, Map<Integer, Double[]> cordinates){
         double distance = 0;
         
         for(int i = 0; i < (route.size() - 1); ++i){

@@ -1,7 +1,8 @@
 package org.vrprep.solchecker.tools;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * TimeWindowChecker class provides various functions for verify the respects of 
@@ -20,10 +21,10 @@ public class TimeWindowChecker {
      */
     public static boolean checkTimeWindow(
             int startTime,
-            ArrayList<Integer> route, 
-            HashMap<Integer, Integer[]> timeWindow,
-            HashMap<Integer, HashMap<Integer, Integer>> distance,
-            HashMap<Integer, Integer> serviceTime){
+            List<Integer> route, 
+            Map<Integer, Integer[]> timeWindow,
+            Map<Integer, Map<Integer, Integer>> distance,
+            Map<Integer, Integer> serviceTime){
         
         int time = startTime;
         
@@ -56,21 +57,21 @@ public class TimeWindowChecker {
      */
     public static boolean checkTimeWindowWithConstantDistanceAndServiceTime(
             int startTime,
-            ArrayList<Integer> route, 
-            HashMap<Integer, Integer[]> timeWindow,
+            List<Integer> route, 
+            Map<Integer, Integer[]> timeWindow,
             int distance,
             int serviceTime){
         
-        HashMap<Integer, Integer> serviceTimeMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> serviceTimeMap = new HashMap<Integer, Integer>();
         
         for(Integer customer : route){
             serviceTimeMap.put(customer, serviceTime);
         }
         
-        HashMap<Integer, HashMap<Integer, Integer>> distanceMap = new HashMap<Integer, HashMap<Integer, Integer>>();
+        Map<Integer, Map<Integer, Integer>> distanceMap = new HashMap<Integer, Map<Integer, Integer>>();
         
         for(Integer customer : route){
-            HashMap<Integer, Integer> customerDistanceMap = new HashMap<Integer, Integer>();
+            Map<Integer, Integer> customerDistanceMap = new HashMap<Integer, Integer>();
             
             for(Integer otherCustomer : route){
                 customerDistanceMap.put(otherCustomer, distance);
@@ -94,15 +95,15 @@ public class TimeWindowChecker {
      */
     public static boolean checkTimeWindowWithConstantDistance(
             int startTime,
-            ArrayList<Integer> route, 
-            HashMap<Integer, Integer[]> timeWindow,
+            List<Integer> route, 
+            Map<Integer, Integer[]> timeWindow,
             int distance,
-            HashMap<Integer, Integer> serviceTime){
+            Map<Integer, Integer> serviceTime){
         
-        HashMap<Integer, HashMap<Integer, Integer>> distanceMap = new HashMap<Integer, HashMap<Integer, Integer>>();
+        Map<Integer, Map<Integer, Integer>> distanceMap = new HashMap<Integer, Map<Integer, Integer>>();
         
         for(Integer customer : route){
-            HashMap<Integer, Integer> customerDistanceMap = new HashMap<Integer, Integer>();
+            Map<Integer, Integer> customerDistanceMap = new HashMap<Integer, Integer>();
             
             for(Integer otherCustomer : route){
                 customerDistanceMap.put(otherCustomer, distance);
@@ -126,12 +127,12 @@ public class TimeWindowChecker {
      */
     public static boolean checkTimeWindowWithConstantServiceTime(
             int startTime,
-            ArrayList<Integer> route, 
-            HashMap<Integer, Integer[]> timeWindow,
-            HashMap<Integer, HashMap<Integer, Integer>> distance,
+            List<Integer> route, 
+            Map<Integer, Integer[]> timeWindow,
+            Map<Integer, Map<Integer, Integer>> distance,
             int serviceTime){
         
-        HashMap<Integer, Integer> serviceTimeMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> serviceTimeMap = new HashMap<Integer, Integer>();
         
         for(Integer customer : route){
             serviceTimeMap.put(customer, serviceTime);

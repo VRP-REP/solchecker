@@ -3,7 +3,6 @@ package org.vrprep.solchecker.tools;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.Vector;
 import java.util.jar.JarFile;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -57,11 +55,9 @@ public class Tools {
             XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
             sortie.output(doc, new FileOutputStream(pluginPath));
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e);
-        } catch (JDOMException e) {
-            System.out.println(e);
-        }
+        } 
     }
 
     /**
@@ -125,9 +121,7 @@ public class Tools {
                 XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
                 sortie.output(doc, new FileOutputStream(pomPath));
             }
-        } catch (IOException e) {
-            System.out.println(e);
-        } catch (JDOMException e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -138,7 +132,7 @@ public class Tools {
      * and solution file).
      * @return List of extracted runnable information.
      */
-    public static ArrayList<RunnableInformation> extractRunnableInformationFromBatchFile(
+    public static List<RunnableInformation> extractRunnableInformationFromBatchFile(
             File batchFile) {
         try {
             // Verify that the batch file exists
@@ -155,7 +149,7 @@ public class Tools {
             List runList = root.getChildren("run");
 
             // Creation of the runnable information list
-            ArrayList runnableInformationList = new ArrayList<RunnableInformation>();
+            List runnableInformationList = new ArrayList<RunnableInformation>();
 
             // Packing of the run list
             Iterator i = runList.iterator();
@@ -169,10 +163,7 @@ public class Tools {
 
             return runnableInformationList;
 
-        } catch (JDOMException e) {
-            System.out.println(e);
-            return null;
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
@@ -183,7 +174,7 @@ public class Tools {
      * @param pluginPath Path to the plugin file.
      * @return List of extracted solchecker information.
      */
-    public static ArrayList<SolcheckerInformation> extractSolcheckerInformationFromPluginFile(
+    public static List<SolcheckerInformation> extractSolcheckerInformationFromPluginFile(
             String pluginPath) {
         try {
             // Open plugin file
@@ -195,7 +186,7 @@ public class Tools {
             List solcheckerList = root.getChildren("solchecker");
 
             // Creation of the solchecker information list
-            ArrayList solcheckerInformationList = new ArrayList<SolcheckerInformation>();
+            List solcheckerInformationList = new ArrayList<SolcheckerInformation>();
 
             // Packing of the solchecker list
             Iterator solcheckerListIterator = solcheckerList.iterator();
@@ -208,13 +199,10 @@ public class Tools {
 
             return solcheckerInformationList;
 
-        } catch (JDOMException e) {
+        } catch (Exception e) {
             System.out.println(e);
             return null;
-        } catch (IOException e) {
-            System.out.println(e);
-            return null;
-        }
+        } 
     }
 
     /**
@@ -222,9 +210,9 @@ public class Tools {
      * @param folderPath Path to the folder to explore.
      * @return List of extracted archive name.
      */
-    public static ArrayList<String> extractJARFromFolder(
+    public static List<String> extractJARFromFolder(
             String folderPath) {
-        ArrayList<String> jarFiles = new ArrayList<String>();
+        List<String> jarFiles = new ArrayList<String>();
 
         String[] folder = new java.io.File(folderPath).list();
         for (String file : folder) {
@@ -276,10 +264,7 @@ public class Tools {
 
             return solcheckerInformation;
 
-        } catch (IOException e) {
-            System.out.println(e);
-            return null;
-        } catch (JDOMException e) {
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
@@ -321,10 +306,7 @@ public class Tools {
             solcheckerInformation.setVersion(rootPom.getChildText("version", namespace));
 
             return solcheckerInformation;
-        } catch (IOException e) {
-            System.out.println(e);
-            return null;
-        } catch (JDOMException e) {
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
@@ -357,12 +339,9 @@ public class Tools {
 
             return executionOk;
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e);
             return false;
-        } catch (InterruptedException e) {
-            System.out.println(e);
-            return false;
-        }
+        } 
     }
 }

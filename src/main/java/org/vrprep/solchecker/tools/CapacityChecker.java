@@ -1,7 +1,8 @@
 package org.vrprep.solchecker.tools;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * CapacityChecker class provides various functions for verify the vehicule capacity.
@@ -10,15 +11,15 @@ public class CapacityChecker {
     /**
      * Checks whether the total customer demand for the route doesn't exceed 
      * the maximum capacity.
-     * @param route List of the customers' identifiant visited during the route
-     * @param demands Map containing for each customer its request/demand
-     * @param capacity The maximum capacity available for the route
-     * @return TRUE if the total customer demand for the route doesn't exceed the maximum capacity
-     * FALSE otherwise
+     * @param route List of the customers' identifier visited during the route.
+     * @param demands Map containing for each customer its request/demand.
+     * @param capacity The maximum capacity available for the route.
+     * @return TRUE if the total customer demand for the route doesn't exceed 
+     * the maximum capacity, FALSE otherwise.
      */
     public static boolean checkCapacity(
-            ArrayList<Integer> route, 
-            HashMap<Integer, Double> demands, 
+            List<Integer> route, 
+            Map<Integer, Double> demands, 
             double capacity){
         
         double routeDemand = 0;
@@ -35,19 +36,21 @@ public class CapacityChecker {
     }
     
     /**
-     * 
-     * @param route
-     * @param demands
-     * @param compartmentsCapacity
-     * @return TRUE
-     * FALSE otherwise
+     * Checks whether the total demand for each compartment of the vehicle 
+     * doesn't exceed the maximum capacity of compartment.
+     * @param route List of the customers' identifier.
+     * @param demands Map containing for each customer its request/demand.
+     * @param compartmentsCapacity Map containing for each compartment its 
+     * maximum capacity.
+     * @return TRUE if the total demand for each compartment of the vehicle 
+     * doesn't exceed the maximum capacity, FALSE otherwise.
      */
     public static boolean checkCompartmentCapacity(
-            ArrayList<Integer> route, 
-            HashMap<Integer, ArrayList<Double []>> demands,
-            HashMap<Integer, Double> compartmentsCapacity){
+            List<Integer> route, 
+            Map<Integer, List<Double []>> demands,
+            Map<Integer, Double> compartmentsCapacity){
         
-        HashMap<Integer, Double> compartmentsDemands = new HashMap<Integer, Double>();
+        Map<Integer, Double> compartmentsDemands = new HashMap<Integer, Double>();
         
         for(int customer : route){            
             for(Double [] customerInformation : demands.get(customer)){

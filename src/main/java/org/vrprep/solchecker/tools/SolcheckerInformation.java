@@ -5,9 +5,9 @@ import java.util.HashSet;
 import org.jdom.Element;
 
 /**
- * SolcheckerInformation class allows to contain the various specific information of
- * the solchecker (jar path, solchecker class name, artifactid, groupid, version,
- * list and configuration of variants and datasets).
+ * SolcheckerInformation class allows to contain the various specific 
+ * information of the solchecker (jar path, solchecker class name, artifactid, 
+ * groupid, version, list and configuration of variants and datasets).
  */
 public class SolcheckerInformation {
 
@@ -74,7 +74,7 @@ public class SolcheckerInformation {
         this.variantDatasets = new HashMap<String, HashSet<String>>();
         this.variantConfiguration = new HashMap<String, SolcheckerConfiguration>();
 
-        // 
+        // Recovery of variants
         if(solcheckerElement.getChild("variants") != null){
             for (Object variant : solcheckerElement.getChild("variants").getChildren("variant")) {
                 Element variantElement = (Element) variant;
@@ -82,13 +82,13 @@ public class SolcheckerInformation {
                 String variantName = variantElement.getAttributeValue("name");
                 this.addVariant(variantName);
 
-                // Récupération des datasets de la variante
+                // Recovery of variant data sets
                 for (Object dataset : variantElement.getChild("datasets").getChildren("dataset")) {
                     Element datasetElement = (Element) dataset;
                     this.addDataset(variantName, datasetElement.getText());
                 }
 
-                // Récupération de la configuration de la variante
+                // Recovery of variant configuration
                 Element configurationElement = variantElement.getChild("configuration");
                 SolcheckerConfiguration solcheckerConfiguration = new SolcheckerConfiguration(configurationElement);
 

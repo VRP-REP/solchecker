@@ -1,7 +1,7 @@
 package org.vrprep.solchecker.tools;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * PickupDeliveryChecker class provides various functions for verify the pickup 
@@ -16,8 +16,8 @@ public class PickupDeliveryChecker {
      * FALSE otherwise.
      */
     public static boolean checkPickupDelivery(
-            ArrayList<Integer> route, 
-            HashMap<Integer, ArrayList<Integer>> pickupDeliveryList){
+            List<Integer> route, 
+            Map<Integer, List<Integer>> pickupDeliveryList){
         for(Integer pickup : pickupDeliveryList.keySet()){
             int pickupIndex = route.indexOf(pickup);
             

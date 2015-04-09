@@ -1,7 +1,7 @@
 package org.vrprep.solchecker.tools;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * VehiculeTypeChecker class provides various functions for verify the type of 
@@ -19,8 +19,8 @@ public class VehiculeTypeChecker {
      */
     public static boolean checkVehiculeType(
             int vehiculeType, 
-            ArrayList<Integer> route, 
-            HashMap<Integer, Integer> customerNeed){
+            List<Integer> route, 
+            Map<Integer, Integer> customerNeed){
         
         for(Integer customer : route){
             if(customerNeed.get(customer) != vehiculeType){
