@@ -12,7 +12,7 @@ public class TimeWindowChecker {
     /**
      * Checks if each customer on the route is visited during its time window.
      * @param startTime Start time of the route 
-     * @param route List of the customers' identifiant visited during the route
+     * @param route List of the customers' identifier visited during the route
      * @param timeWindow Map containing for each customer its time window
      * @param distance Map containing for each customer its distance with others customers
      * @param serviceTime Map containing for each customer its service time
@@ -48,7 +48,7 @@ public class TimeWindowChecker {
     /**
      * Checks if each customer on the route is visited during its time window.
      * @param startTime Start time of the route 
-     * @param route List of the customers' identifiant visited during the route
+     * @param route List of the customers' identifier visited during the route
      * @param timeWindow Map containing for each customer its time window
      * @param distance Distance between each customer
      * @param serviceTime Time for customer service
@@ -86,7 +86,7 @@ public class TimeWindowChecker {
     /**
      * Checks if each customer on the route is visited during its time window.
      * @param startTime Start time of the route 
-     * @param route List of the customers' identifiant visited during the route
+     * @param route List of the customers' identifier visited during the route
      * @param timeWindow Map containing for each customer its time window
      * @param distance Distance between each customer
      * @param serviceTime Map containing for each customer its service time
@@ -118,7 +118,7 @@ public class TimeWindowChecker {
     /**
      * Checks if each customer on the route is visited during its time window.
      * @param startTime Start time of the route 
-     * @param route List of the customers' identifiant visited during the route
+     * @param route List of the customers' identifier visited during the route
      * @param timeWindow Map containing for each customer its time window
      * @param distance Map containing for each customer its distance with others customers
      * @param serviceTime Time for customer service
