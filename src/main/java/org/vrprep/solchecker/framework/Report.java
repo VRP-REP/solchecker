@@ -18,6 +18,19 @@ public final class Report {
      * List of evaluations to be made to build report.
      */
     private List<Evaluation> evaluations = new ArrayList<Evaluation>();
+    
+    private String instanceName = "";
+    private String solutionName = "";
+    
+    /**
+     * Build a report with the name of the solution and the instance.
+     * @param solutionName Name of the solution
+     * @param instanceName Name of the instance
+     */
+    public Report(String solutionName, String instanceName){
+        this.solutionName = solutionName;
+        this.instanceName = instanceName;
+    }
 
     public void addEvaluation(Evaluation e) {
         this.evaluations.add(e);
@@ -27,6 +40,22 @@ public final class Report {
         return evaluations;
     }
     
+    public void setInstanceName(String name){
+        this.instanceName = name;
+    }
+    
+    public String getInstanceName(){
+        return this.instanceName;
+    }
+    
+    public void setSolutionName(String name){
+        this.solutionName = name;
+    }
+    
+    public String getSolutionName(){
+        return this.solutionName;
+    }
+    
     /**
      * Exports the content of evaluations to xml file.
      * @param f Output file.
@@ -34,6 +63,8 @@ public final class Report {
     public void exportToXML(File f){
         try {
             Element root = new Element("report");
+            root.setAttribute("instance", instanceName);
+            root.setAttribute("solution", solutionName);
             Document doc = new Document(root);
             
             for(Evaluation evaluation : evaluations){
@@ -45,5 +76,13 @@ public final class Report {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+    
+    /**
+     * Transforms the report to String.
+     * @return The concatenation of the instance name and the solution name.
+     */
+    public String toString(){
+        return instanceName + " - " + solutionName;
     }
 }
