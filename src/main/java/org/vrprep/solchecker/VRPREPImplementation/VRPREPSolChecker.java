@@ -54,7 +54,7 @@ public class VRPREPSolChecker extends SolChecker {
         //Set up
         Instance instance = ib.buildInstance(i);
         Solution solution = sb.buildSolution(s);
-        Report report = new Report();
+        Report report = new Report(s.getName(), i.getName());
 
         //Evaluate objectives
         for (Objective of : objectives) {

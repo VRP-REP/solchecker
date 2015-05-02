@@ -18,7 +18,7 @@ public class VRPREPSolutionBuilder implements SolutionBuilder {
      * Build a solution from a file. The file must be formatted like 
      * "http://www.coin-or.org/SYMPHONY/branchandcut/VRP/data/" solution.
      * @param f File containing all routes.
-     * @return If the file is correct, then Instance of {@link Solution} 
+     * @return If the file is correct, then an instance of {@link VRPREPSolution} 
      * containing all the routes read on the file, otherwise, null.
      */
     public Solution buildSolution(File f) {
