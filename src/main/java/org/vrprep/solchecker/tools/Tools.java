@@ -317,7 +317,7 @@ public class Tools {
      * @param commande Commande to execute.
      * @return TRUE if the command was executed, FALSE otherwise.
      */
-    public static boolean executeCommande(String[] commande) {
+    public static boolean executeCommande(String commande) {
         try {
             boolean executionOk = true;
             String line = "";

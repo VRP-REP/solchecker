@@ -67,7 +67,7 @@ public class SolcheckerInformation {
         this.solcheckerClassName = solcheckerElement.getChild("solchecker-class-name").getText();
         
         this.artifactID = (solcheckerElement.getChild("artifactID") != null)?solcheckerElement.getChild("artifactID").getText():null;
-        this.groupID = (solcheckerElement.getChild("groupId") != null)?solcheckerElement.getChild("groupId").getText():null;
+        this.groupID = (solcheckerElement.getChild("groupID") != null)?solcheckerElement.getChild("groupID").getText():null;
         this.version = (solcheckerElement.getChild("version") != null)?solcheckerElement.getChild("version").getText():null;
 
         this.variants = new HashSet<String>();
