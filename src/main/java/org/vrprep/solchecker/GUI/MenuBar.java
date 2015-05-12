@@ -24,7 +24,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
     private JMenu pluginMenu = new JMenu("Plugin");
     private JMenuItem managePluginMenuItem = new JMenuItem("Manage");
-    private JMenuItem generatePluginMenuItem = new JMenuItem("Generate");
+    //private JMenuItem generatePluginMenuItem = new JMenuItem("Generate");
 
     private JMenu helpMenu = new JMenu("Help ?");
     private JMenuItem aboutMenuItem = new JMenuItem("About");
@@ -44,8 +44,8 @@ public class MenuBar extends JMenuBar implements ActionListener {
         this.add(pluginMenu);
         pluginMenu.add(managePluginMenuItem);
         managePluginMenuItem.addActionListener(this);
-        pluginMenu.add(generatePluginMenuItem);
-        generatePluginMenuItem.addActionListener(this);
+        //pluginMenu.add(generatePluginMenuItem);
+        //generatePluginMenuItem.addActionListener(this);
 
         this.add(helpMenu);
         helpMenu.add(aboutMenuItem);
@@ -62,8 +62,8 @@ public class MenuBar extends JMenuBar implements ActionListener {
         } else if (arg0.getSource() == managePluginMenuItem) {
             //new PluginFrame();
             AppLauncher.pluginFrame.setVisible(true);
-        } else if (arg0.getSource() == generatePluginMenuItem) {
-            AppLauncher.pluginGenerationFrame.setVisible(true);
+        //} else if (arg0.getSource() == generatePluginMenuItem) {
+            //AppLauncher.pluginGenerationFrame.setVisible(true);
         } else if (arg0.getSource() == aboutMenuItem) {
             JOptionPane.showMessageDialog(null, "For more information,\nplease go to http://vrp-rep.org", "VRP-REP", JOptionPane.INFORMATION_MESSAGE);
         }

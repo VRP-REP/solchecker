@@ -7,11 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.apache.commons.lang.SystemUtils;
 
 /**
  *
@@ -103,22 +104,27 @@ public class PluginToInstallDialog extends JDialog implements ActionListener {
      * @return
      */
     public Vector<Vector> notInstalledPluginData() {
-        ArrayList<SolcheckerInformation> solcheckerInformationList = Tools.extractInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
-        ArrayList<String> pluginJarList = Tools.extractJARFromFolder(this.getClass().getResource("/plugin").getFile());
+        List<SolcheckerInformation> solcheckerInformationList = Tools.extractSolcheckerInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
+        List<String> pluginJarList = Tools.extractJARFromFolder(this.getClass().getResource("/plugin").getFile());
 
         Vector<Vector> pluginList = new Vector<Vector>();
 
         for (String pluginJarName : pluginJarList) {
-            Vector<String> solcheckerInformation = Tools.extractSolcheckerInformationForTable(this.getClass().getResource("/plugin/" + pluginJarName).getFile());
+            Vector<String> solcheckerInformation = Tools.extractInformationFromJAR(this.getClass().getResource("/plugin/" + pluginJarName).getFile());
+
             if (solcheckerInformation != null) {
-                boolean alreadyInstalled = false;
-                for (SolcheckerInformation solcheckerInstalled : solcheckerInformationList) {
-                    if (solcheckerInstalled.compareTo(solcheckerInformation)) {
-                        alreadyInstalled = true;
+                if (solcheckerInformation.size() == 4) {
+                    boolean alreadyInstalled = false;
+
+                    for (SolcheckerInformation solcheckerInstalled : solcheckerInformationList) {
+                        if (solcheckerInstalled.compareTo(solcheckerInformation.get(1), solcheckerInformation.get(2), solcheckerInformation.get(3))) {
+                            alreadyInstalled = true;
+                        }
                     }
-                }
-                if (!alreadyInstalled) {
-                    pluginList.add(solcheckerInformation);
+
+                    if (!alreadyInstalled) {
+                        pluginList.add(solcheckerInformation);
+                    }
                 }
             }
         }
@@ -135,21 +141,28 @@ public class PluginToInstallDialog extends JDialog implements ActionListener {
         for (int i = 0; i < model.getRowCount(); ++i) {
             Boolean toInstall = (model.getValueAt(i, 4) != null) ? (Boolean) model.getValueAt(i, 4) : false;
             if (toInstall) {
+                String commande = "";
+                
+                if(SystemUtils.IS_OS_WINDOWS){
+                    commande = "cmd.exe" + " /C" + " mvn" + " install:install-file" + " -Dfile=" + model.getValueAt(i, 0) + " -DgroupId=" + model.getValueAt(i, 2) + " -DartifactId=" + model.getValueAt(i, 1) + " -Dversion=" + model.getValueAt(i, 3) + " -Dpackaging=jar";
+                } else {
+                    commande = "mvn" + " install:install-file" + " -Dfile=" + model.getValueAt(i, 0) + " -DgroupId=" + model.getValueAt(i, 2) + " -DartifactId=" + model.getValueAt(i, 1) + " -Dversion=" + model.getValueAt(i, 3) + " -Dpackaging=jar";
+                }
+                
                 // Installation du plugin dans le projet
-                String[] commande = {"cmd.exe", "/C", "mvn", "install:install-file", "-Dfile=" + model.getValueAt(i, 0), "-DgroupId=" + model.getValueAt(i, 2), "-DartifactId=" + model.getValueAt(i, 1), "-Dversion=" + model.getValueAt(i, 3), "-Dpackaging=jar"};
                 boolean installationOk = Tools.executeCommande(commande);
 
                 // Si l'installation a réussi
                 if (installationOk) {
                     // Ajout de la dépendance dans le pom.xml
                     String path = new File("").getAbsolutePath() + "\\pom.xml";
-                    Tools.addDependencyToPom(path, model.getValueAt(i, 1).toString(), model.getValueAt(i, 2).toString(), model.getValueAt(i, 3).toString());
+                    Tools.addDependencyToPomFile(path, model.getValueAt(i, 1).toString(), model.getValueAt(i, 2).toString(), model.getValueAt(i, 3).toString());
 
                     // Récupération des informations sur le solchecker
-                    SolcheckerInformation solcheckerInformation = Tools.extractSolcheckerInformation(model.getValueAt(i, 0).toString());
+                    SolcheckerInformation solcheckerInformation = Tools.extractSolcheckerInformationFromJAR(model.getValueAt(i, 0).toString());
 
                     // Update plugin.xml 
-                    Tools.updateInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile(), solcheckerInformation);
+                    Tools.addSolcheckerInformationToPluginFile(this.getClass().getResource("/plugin.xml").getFile(), solcheckerInformation);
                 }
             }
         }

@@ -124,7 +124,7 @@ public class SolcheckerFrame extends JFrame implements ActionListener {
      * @param runList
      * @return
      */
-    public List<Report> runMultiple(ArrayList<RunnableInformation> runList) {
+    public List<Report> runMultiple(List<RunnableInformation> runList) {
         System.out.println("-- RUN Multiple --");
 
         List<Report> reportList = new ArrayList<Report>();
@@ -149,7 +149,7 @@ public class SolcheckerFrame extends JFrame implements ActionListener {
                 Report report = runSingle(new RunnableInformation(modeChoicePanel.getSolutionFile(), modeChoicePanel.getInstanceFile()));
                 if(report != null) reportList.add(report);
             } else {
-                ArrayList<RunnableInformation> runList = Tools.extractInformationFromBatchFile(modeChoicePanel.getBatchFile());
+                List<RunnableInformation> runList = Tools.extractRunnableInformationFromBatchFile(modeChoicePanel.getBatchFile());
                 if(runList != null) reportList = runMultiple(runList);
             }
             

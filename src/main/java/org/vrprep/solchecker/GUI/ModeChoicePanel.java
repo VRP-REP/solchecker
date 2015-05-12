@@ -81,7 +81,6 @@ public class ModeChoicePanel extends JPanel implements ActionListener {
      * actionPerformed - Event on radio button. If individual is check, the
      * individual panel is displayed. Else, the multiple panel is displayed.
      */
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == individualButton) {
             // Show individualPanel

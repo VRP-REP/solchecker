@@ -8,7 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -76,7 +76,7 @@ public class PluginFrame extends JFrame implements ActionListener{
 
     public void updatePluginTable(){
         //
-        ArrayList<SolcheckerInformation> solcheckerInformationList = Tools.extractInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
+        List<SolcheckerInformation> solcheckerInformationList = Tools.extractSolcheckerInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
         
         //
         Vector<String> title = new Vector<String>();

@@ -30,7 +30,7 @@ public class SolcheckerChoicePanel extends JPanel implements ActionListener {
     private final JComboBox datasetComboBox;
     private final JComboBox solcheckerComboBox;
 
-    private ArrayList<SolcheckerInformation> solcheckerInformationList;
+    private List<SolcheckerInformation> solcheckerInformationList;
 
     /**
      *
@@ -41,7 +41,7 @@ public class SolcheckerChoicePanel extends JPanel implements ActionListener {
         this.setBorder(BorderFactory.createTitledBorder(BorderFactory
                 .createMatteBorder(1, 1, 1, 1, new Color(0, 125, 204)), "Solchecker"));
 
-        solcheckerInformationList = Tools.extractInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
+        solcheckerInformationList = Tools.extractSolcheckerInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
 
         // Initialisation of the variant label and combobox
         variantLabel = new JLabel("Variant :");
@@ -75,7 +75,7 @@ public class SolcheckerChoicePanel extends JPanel implements ActionListener {
      *
      */
     public void updateSolcheckerList() {
-        solcheckerInformationList = Tools.extractInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
+        solcheckerInformationList = Tools.extractSolcheckerInformationFromPluginFile(this.getClass().getResource("/plugin.xml").getFile());
     }
 
     /**
@@ -103,7 +103,8 @@ public class SolcheckerChoicePanel extends JPanel implements ActionListener {
 
             HashSet<String> datasetSet = new HashSet<String>();
             for (SolcheckerInformation solcheckerInformation : solcheckerInformationList) {
-                datasetSet.addAll(solcheckerInformation.getDatasets(variantSelected));
+                if(solcheckerInformation.getDatasets(variantSelected) != null)
+                    datasetSet.addAll(solcheckerInformation.getDatasets(variantSelected));
             }
 
             // Sort

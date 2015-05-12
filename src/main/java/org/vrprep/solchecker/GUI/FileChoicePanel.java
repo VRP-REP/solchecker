@@ -75,7 +75,6 @@ public class FileChoicePanel extends JPanel implements ActionListener {
      * verify the content of the file choose).
      * @param e
      */
-    @Override
     public void actionPerformed(ActionEvent e) {
         // FileChooser initialization
         JFileChooser fileChooser = new JFileChooser();
