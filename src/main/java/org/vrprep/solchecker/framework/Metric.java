@@ -10,6 +10,6 @@ public interface Metric {
      * @param i Instance reffered by the solution.
      * @return Evaluation object containing log messages.
      */
-    public Evaluation evaluate(Solution s, Instance i);
+    public MetricEvaluation evaluate(Solution s, Instance i);
 
 }
